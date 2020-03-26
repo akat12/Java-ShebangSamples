@@ -3,16 +3,16 @@
 Some samples that uses java scripts for red teaming. Uploaded to VT to check out detections:
 
 catalina.sn:
-![Image of catalina](https://github.com/akat12/Java-ShebangSamples/images/catalina.png)
+![Image of catalina](https://github.com/akat12/Java-ShebangSamples/tree/master/images/catalina.png)
 
 servers.xml:
-![Image of servers](https://github.com/akat12/Java-ShebangSamples/images/server_xml.png)
+![Image of servers](https://github.com/akat12/Java-ShebangSamples/tree/master/images/server_xml.png)
 
 modulez.xml:
-![Image of modulez](https://github.com/akat12/Java-ShebangSamples/images/modulez_xml.png)
+![Image of modulez](https://github.com/akat12/Java-ShebangSamples/tree/master/images/modulez_xml.png)
 
 SampleApp.xml:
-![Image of sampleapp](https://github.com/akat12/Java-ShebangSamples/images/Sample_app.png)
+![Image of sampleapp](https://github.com/akat12/Java-ShebangSamples/tree/master/images/Sample_app.png)
 
 ##Sample List
 catalina.sn :- cmd echoer, use stickybits to escalate priveleges. no rshell
