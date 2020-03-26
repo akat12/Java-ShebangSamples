@@ -1,0 +1,36 @@
+#!/usr/bin/java --source 11
+
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+public class wyz{
+    public static void main(String[] args){
+        try{
+
+            Socket sock = new Socket(args[0],Integer.parseInt(args[1]));
+           DataOutputStream out = new DataOutputStream(sock.getOutputStream());
+           DataInputStream in = new DataInputStream(sock.getInputStream());
+           String jack = "";
+           Scanner sc = new Scanner(System.in);
+           while(!jack.toLowerCase().equals("exit")){
+               System.out.print(">");
+               jack = sc.nextLine();
+               out.writeUTF(jack);
+               out.flush();
+               if(!jack.toLowerCase().equals("exit"))
+               System.out.println(in.readUTF());
+
+           }
+
+           out.close();
+           in.close();
+           sock.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+
+    }
+}

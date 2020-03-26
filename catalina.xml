@@ -1,0 +1,10 @@
+#!/usr/bin/java --source 11
+
+public class jsx{
+
+public static void main(String[] args){
+try{
+Process p = Runtime.getRuntime().exec(args);
+}catch(Exception e){}
+}
+}
