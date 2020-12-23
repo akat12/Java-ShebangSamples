@@ -5,6 +5,7 @@ From JAVA release 11 onwards the java launcher can run a program supplied as a j
 ## Repository browser
 
 detection/ - Contains the yara rule for detecting these samples and the Virustotal scores for these samples.
+
 samples/ - Contains the samples mentioned in the Sample List.
 
 ## Sample List
@@ -16,7 +17,7 @@ modulez.xml:- client for TCP rshell. pass the ip and port in cmdline
 
 SampleApp.xml:- Http listener shell. Default password is trebuchet. Usage example:
 
-                GET : curl -X GET "http://127.0.0.1:8089/examples/Sampleappz.jsp?huskarl=trebuchet&paladin=whoami"
+    GET : curl -X GET "http://127.0.0.1:8089/examples/Sampleappz.jsp?huskarl=trebuchet&paladin=whoami"
 				
-                POST : curl -X POST "http://127.0.0.1:8089/examples/Sampleappz.jsp" -d "huskarl=trebuchet&paladin=whoami"
+    POST : curl -X POST "http://127.0.0.1:8089/examples/Sampleappz.jsp" -d "huskarl=trebuchet&paladin=whoami"
 
