@@ -1,6 +1,6 @@
 # JAVA SHEBANG SAMPLES
 
-From JAVA release 11 onwards the java launcher can run a program supplied as a java source code file. The full details reagrding this feature can be found here; [jeps 330](https://openjdk.java.net/jeps/330). This feature elicited me to experiment and convert some webshell samples into java shebang to target java webapplication servers. Moreover, the attacker can put the scripts in any directory and set the HttpContext to mimic webapplication server URIs. This will also bypass any FIM based detections set on the webapplication's run folder.
+From JAVA release 11 onwards the java launcher can run a program supplied as a java source code file. The full details regarding this feature can be found here; [jeps 330](https://openjdk.java.net/jeps/330). This elicited me to experiment and convert some older webshell samples into shebang to target java webapplication servers. The attackers can also put the scripts in any directory and set the HttpContext to mimic webapplication server URIs. This will bypass any FIM based detections set on the webapplication's run folder.
 
 ## Repository browser
 
